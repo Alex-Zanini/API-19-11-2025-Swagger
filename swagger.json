@@ -1,0 +1,149 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Minha API com Swagger",
+    "version": "1.0.0",
+    "description": "Documentação da API usando Swagger"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+       "/usuarios": {
+      "get": {
+        "summary": "Lista usuários",
+        "tags": [
+          "Usuarios"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista retornada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Usuario"
+                  }
+                },
+                "examples": {
+                  "default": {
+                    "value": [
+                      {
+                        "id": 1,
+                        "nome": "Alice"
+                      },
+                      {
+                        "id": 2,
+                        "nome": "Bob"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/erro400": {
+      "get": {
+        "summary": "Simula erro 400",
+        "tags": [
+          "Erros"
+        ],
+        "responses": {
+          "400": {
+            "description": "Requisição inválida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "default": {
+                    "value": {
+                      "mensagem": "Requisição inválida.",
+                      "status": 400,
+                      "codigo": "REQUISICAO_INVALIDA"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/erro500": {
+      "get": {
+        "summary": "Simula erro 500",
+        "tags": [
+          "Erros"
+        ],
+        "responses": {
+          "500": {
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "default": {
+                    "value": {
+                      "mensagem": "Erro interno do servidor.",
+                      "status": 500,
+                      "codigo": "ERRO_INTERNO"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Usuario": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "nome"
+        ]
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "mensagem": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "codigo": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "mensagem",
+          "status",
+          "codigo"
+        ]
+      }
+    }
+  }
+}
